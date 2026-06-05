@@ -193,7 +193,7 @@ def generate_labels(
 
                     c.setFont(
                         "Helvetica-Bold",
-                        14
+                        20
                     )
 
                     c.drawString(
@@ -218,7 +218,7 @@ def generate_labels(
 
                     c.setFont(
                         "Helvetica-Bold",
-                        12
+                        20
                     )
 
                     c.drawString(
