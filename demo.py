@@ -138,111 +138,125 @@ def generate_labels(
 
                 # ================= THIRD: TRANSPARENCY =================
 
-        if generate_transparency:
+       if generate_transparency:
 
-            try:
+    try:
 
-                with open(
-                    "artifact.json",
-                    "r",
-                    encoding="utf-8"
-                ) as f:
-                    artifact = json.load(f)
+        with open(
+            "artifact.json",
+            "r",
+            encoding="utf-8"
+        ) as f:
+            artifact = json.load(f)
 
-                transparency_codes = []
+        transparency_codes = []
 
-                for item in artifact.get("codesList", []):
-                    transparency_codes.extend(
-                        item.get("codes", [])
-                    )
+        for item in artifact.get("codesList", []):
+            transparency_codes.extend(
+                item.get("codes", [])
+            )
 
-                transparency_sku = ""
+        transparency_sku = ""
 
-                if artifact.get("codesList"):
-                    transparency_sku = artifact["codesList"][0].get(
-                        "sku",
-                        ""
-                    )
+        if artifact.get("codesList"):
+            transparency_sku = artifact["codesList"][0].get(
+                "sku",
+                ""
+            )
 
-                transparency_qty = min(
-                    qty,
-                    len(transparency_codes)
-                )
+        transparency_qty = min(
+            qty,
+            len(transparency_codes)
+        )
 
-                for page_no in range(transparency_qty):
+        for page_no in range(transparency_qty):
 
-                    code = transparency_codes[page_no]
+            code = transparency_codes[page_no]
 
-                    dm_file = f"dm_{page_no}.png"
+            dm_file = f"dm_{page_no}.png"
 
-                    encoder = DataMatrixEncoder(code)
-                    encoder.save(dm_file)
+            encoder = DataMatrixEncoder(code)
+            encoder.save(dm_file)
 
-                    if page_no > 0:
-                        c.showPage()
+            if page_no > 0:
+                c.showPage()
 
-                    c.drawImage(
-                    "logo.png",
-                     1.3 * cm,
-                     7.0 * cm,
-                     width=3 * cm,
-                    height=2.2 * cm,
-                    preserveAspectRatio=True,
-                     mask='auto'
-                        )
+            # ================= LOGO =================
 
-                    c.setFont(
-                        "Helvetica-Bold",
-                        50
-                    )
+            c.drawImage(
+                "logo.png",
+                1.3 * cm,
+                6.8 * cm,
+                width=4.5 * cm,
+                height=3.0 * cm,
+                preserveAspectRatio=True,
+                mask='auto'
+            )
 
-                    c.drawString(
-                        5 * cm,
-                        8.0 * cm,
-                        "Scan with the"
-                    )
+            # ================= TEXT =================
 
-                    c.drawString(
-                        5 * cm,
-                        7.2 * cm,
-                        "Transparency App"
-                    )
+            c.setFont(
+                "Helvetica-Bold",
+                26
+            )
 
-                    c.drawImage(
-                        dm_file,
-                        14 * cm,
-                        5.8 * cm,
-                        width=3.8 * cm,
-                        height=3.8 * cm
-                    )
+            c.drawString(
+                5.5 * cm,
+                8.2 * cm,
+                "Scan with the"
+            )
 
-                    c.setFont(
-                        "Helvetica-Bold",
-                        50
-                    )
+            c.drawString(
+                5.5 * cm,
+                7.1 * cm,
+                "Transparency App"
+            )
 
-                    c.drawString(
-                        14 * cm,
-                        5.0 * cm,
-                        transparency_sku
-                    )
+            # ================= DATAMATRIX =================
 
-                    c.drawRightString(
-                        LABEL_WIDTH - 1 * cm,
-                        0.8 * cm,
-                        str(page_no + 1)
-                    )
+            c.drawImage(
+                dm_file,
+                13.0 * cm,
+                4.8 * cm,
+                width=5.5 * cm,
+                height=5.5 * cm
+            )
 
-                    if os.path.exists(dm_file):
-                        os.remove(dm_file)
+            # ================= SKU =================
 
-            except Exception as e:
+            c.setFont(
+                "Helvetica-Bold",
+                22
+            )
 
-                print(
-                    "Transparency Error:",
-                    e
-                )
+            c.drawString(
+                13.0 * cm,
+                3.8 * cm,
+                transparency_sku
+            )
 
+            # ================= PAGE NUMBER =================
+
+            c.setFont(
+                "Helvetica",
+                18
+            )
+
+            c.drawRightString(
+                LABEL_WIDTH - 1 * cm,
+                0.8 * cm,
+                str(page_no + 1)
+            )
+
+            if os.path.exists(dm_file):
+                os.remove(dm_file)
+
+    except Exception as e:
+
+        print(
+            "Transparency Error:",
+            e
+        )
         c.save()
 
     print("✅ Done")
