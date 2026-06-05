@@ -178,16 +178,18 @@ def generate_labels(
                     encoder = DataMatrixEncoder(code)
                     encoder.save(dm_file)
 
-                    c.showPage()
+                    if page_no > 0:
+                        c.showPage()
 
                     c.drawImage(
-                        "logo.png",
-                        1.3 * cm,
-                        7.0 * cm,
-                        width=3 * cm,
-                        height=2.2 * cm,
-                        preserveAspectRatio=True
-                    )
+                    "logo.png",
+                     1.3 * cm,
+                     7.0 * cm,
+                     width=3 * cm,
+                    height=2.2 * cm,
+                    preserveAspectRatio=True,
+                     mask='auto'
+                        )
 
                     c.setFont(
                         "Helvetica-Bold",
