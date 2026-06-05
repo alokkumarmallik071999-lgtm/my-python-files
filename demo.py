@@ -5,7 +5,12 @@ from reportlab.graphics.barcode import code128
 from textwrap import wrap
 from datetime import datetime
 
-def generate_labels(company_choice, header_choice, generate_barcode):
+def generate_labels(
+    company_choice,
+    header_choice,
+    generate_barcode,
+    generate_transparency
+):
     
     # ================= LABEL SIZE =================
     LABEL_WIDTH = 20.026 * cm
