@@ -10,13 +10,14 @@ from pystrich.datamatrix import DataMatrixEncoder
 import requests
 import uuid
 import time
-def get_transparency_codes(gtin, count):
 
+
+def get_token():
     CLIENT_ID = "6peh3gn3crdveh15aajar7gabf"
     CLIENT_SECRET = "7993b2622g2vnjcpoamj44bm5v592t14s86erniigi8k0igaap"
 
     AUTH_URL = "https://tpncy-web-services.auth.us-east-1.amazoncognito.com/oauth2/token"
-    API_URL = "https://api.transparency.com/v1.2"
+   
 
     token_response = requests.post(
         AUTH_URL,
@@ -29,8 +30,10 @@ def get_transparency_codes(gtin, count):
 
     token_response.raise_for_status()
 
-    token = token_response.json()["access_token"]
+    return token_response.json()["access_token"]
 
+def get_transparency_codes(gtin, count, token):
+    API_URL = "https://api.transparency.com/v1.2"
     headers = {
         "Authorization": f"Bearer {token}",
         "Content-Type": "application/json"
@@ -47,6 +50,9 @@ def get_transparency_codes(gtin, count):
         headers=headers,
         json=payload
     )
+    print("Payload:", payload)
+    print("Response:", response.text)
+
 
     response.raise_for_status()
 
@@ -112,6 +118,7 @@ def generate_labels(
     generate_barcode=True,
     generate_transparency=True
 ):
+    token = get_token()
 
     # ================= LABEL SIZE =================
 
@@ -147,7 +154,10 @@ def generate_labels(
 
     # ================= EXCEL =================
 
-    df = pd.read_excel("labels.xlsx")
+    df = pd.read_excel(
+    "labels.xlsx",
+    dtype={"GTIN": str}
+)
 
     # ================= TRANSPARENCY DATA =================
 
@@ -162,9 +172,9 @@ def generate_labels(
 
         mrp = f"{float(row['MRP']):.0f}"
         qty = int(row["QTY"])
-        gtin = str(
-    row.get("GTIN", "")
-).strip()
+        gtin = str(row.get("GTIN", "")).strip()
+
+    
 
         transparency_codes = []
         transparency_sku = ""
@@ -184,7 +194,8 @@ def generate_labels(
                 transparency_codes, transparency_sku = (
                     get_transparency_codes(
                         gtin,   
-                        qty
+                        qty,
+                        token
                     )
                 )
 
