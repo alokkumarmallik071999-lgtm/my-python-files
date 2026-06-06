@@ -451,7 +451,7 @@ def generate_labels(
                         width=20
                     )
 
-                    sku_y = 1.5 * cm
+                    sku_y = 1.9 * cm
 
                     for line in sku_lines:
                         c.drawCentredString(
