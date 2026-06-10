@@ -13,18 +13,15 @@ import time
 
 
 def get_token(client_id, client_secret):
-    "client_id": client_id,
-    "client_secret": client_secret
 
     AUTH_URL = "https://tpncy-web-services.auth.us-east-1.amazoncognito.com/oauth2/token"
-   
 
     token_response = requests.post(
         AUTH_URL,
         data={
             "grant_type": "client_credentials",
-            "client_id": CLIENT_ID,
-            "client_secret": CLIENT_SECRET
+            "client_id": client_id,
+            "client_secret": client_secret
         }
     )
 
@@ -117,7 +114,9 @@ def generate_labels(
     header_choice="1",
     generate_barcode=True,
     generate_transparency=True,
-    excel_file="labels.xlsx"
+    excel_file="labels.xlsx",
+    client_id="",
+    client_secret=""
 ):
     token = get_token(
     client_id,
