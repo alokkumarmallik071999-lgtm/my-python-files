@@ -116,7 +116,8 @@ def generate_labels(
     company_choice="2",
     header_choice="1",
     generate_barcode=True,
-    generate_transparency=True
+    generate_transparency=True,
+    excel_file="labels.xlsx"
 ):
     token = get_token()
 
@@ -153,6 +154,10 @@ def generate_labels(
     ]
 
     # ================= EXCEL =================
+    if not os.path.exists(excel_file):
+    raise FileNotFoundError(
+        f"Excel file not found: {excel_file}"
+    )
 
     df = pd.read_excel(
     "labels.xlsx",
