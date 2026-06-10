@@ -12,9 +12,7 @@ import uuid
 import time
 
 
-def get_token():
-    CLIENT_ID = "6peh3gn3crdveh15aajar7gabf"
-    CLIENT_SECRET = "7993b2622g2vnjcpoamj44bm5v592t14s86erniigi8k0igaap"
+def get_token(client_id, client_secret):
 
     AUTH_URL = "https://tpncy-web-services.auth.us-east-1.amazoncognito.com/oauth2/token"
    
