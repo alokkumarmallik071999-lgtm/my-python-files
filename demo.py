@@ -12,19 +12,21 @@ import uuid
 import time
 
 
-def get_token(client_id, client_secret):
+def get_token():
+    CLIENT_ID = "6peh3gn3crdveh15aajar7gabf"
+    CLIENT_SECRET = "7993b2622g2vnjcpoamj44bm5v592t14s86erniigi8k0igaap"
 
     AUTH_URL = "https://tpncy-web-services.auth.us-east-1.amazoncognito.com/oauth2/token"
+   
 
     token_response = requests.post(
-    AUTH_URL,
-    data={
-        "grant_type": "client_credentials",
-        "client_id": client_id,
-        "client_secret": client_secret
-    }
-)
-    
+        AUTH_URL,
+        data={
+            "grant_type": "client_credentials",
+            "client_id": CLIENT_ID,
+            "client_secret": CLIENT_SECRET
+        }
+    )
 
     token_response.raise_for_status()
 
@@ -114,15 +116,9 @@ def generate_labels(
     company_choice="2",
     header_choice="1",
     generate_barcode=True,
-    generate_transparency=True,
-    excel_file="labels.xlsx",
-    client_id="",
-    client_secret=""
+    generate_transparency=True
 ):
-    token = get_token(
-    client_id,
-    client_secret
-)
+    token = get_token()
 
     # ================= LABEL SIZE =================
 
@@ -157,13 +153,9 @@ def generate_labels(
     ]
 
     # ================= EXCEL =================
-    if not os.path.exists(excel_file):
-        raise FileNotFoundError(
-        f"Excel file not found: {excel_file}"
-    )
 
     df = pd.read_excel(
-    excel_file,
+    "labels.xlsx",
     dtype={"GTIN": str}
 )
 
@@ -510,5 +502,4 @@ def generate_labels(
     print(
         "\n🎉 All PDFs generated successfully."
     )
-
 
