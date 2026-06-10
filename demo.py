@@ -119,7 +119,10 @@ def generate_labels(
     generate_transparency=True,
     excel_file="labels.xlsx"
 ):
-    token = get_token()
+    token = get_token(
+    client_id,
+    client_secret
+)
 
     # ================= LABEL SIZE =================
 
