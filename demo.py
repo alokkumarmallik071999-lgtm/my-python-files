@@ -13,6 +13,8 @@ import time
 
 
 def get_token(client_id, client_secret):
+    "client_id": client_id,
+    "client_secret": client_secret
 
     AUTH_URL = "https://tpncy-web-services.auth.us-east-1.amazoncognito.com/oauth2/token"
    
