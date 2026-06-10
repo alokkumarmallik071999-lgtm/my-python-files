@@ -25,7 +25,7 @@ def get_token(client_id, client_secret):
     }
 )
     print(token_response.text)
-    )
+    
 
     token_response.raise_for_status()
 
