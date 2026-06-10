@@ -17,12 +17,14 @@ def get_token(client_id, client_secret):
     AUTH_URL = "https://tpncy-web-services.auth.us-east-1.amazoncognito.com/oauth2/token"
 
     token_response = requests.post(
-        AUTH_URL,
-        data={
-            "grant_type": "client_credentials",
-            "client_id": client_id,
-            "client_secret": client_secret
-        }
+    AUTH_URL,
+    data={
+        "grant_type": "client_credentials",
+        "client_id": client_id,
+        "client_secret": client_secret
+    }
+)
+    print(token_response.text)
     )
 
     token_response.raise_for_status()
