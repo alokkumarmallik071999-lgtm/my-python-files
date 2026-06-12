@@ -13,7 +13,7 @@ import time
 
 
 def get_token():
-    with open("config.jason","r")as f:
+    with open("config.json","r")as f:
         data=jason.load(f)
     CLIENT_ID = data["CLIENT_ID"]
     CLIENT_SECRET = data["CLIENT_SECRET"]
