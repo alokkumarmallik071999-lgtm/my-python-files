@@ -11,7 +11,6 @@ import requests
 import uuid
 import time
 
-
 def get_token():
     with open("config.json","r")as f:
         data=jason.load(f)
